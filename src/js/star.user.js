@@ -1,6 +1,8 @@
 (function($) {
 	var PLUS_URL = 'https://plus.google.com/';
 
+	var favorites = {};
+
 /*
  * Google+ CSS
  *
@@ -60,10 +62,12 @@
 		var $starHolder = $('<div class="post_star"/>')
 			.hover(
 				function() {
+					if (processing) return;
 					$(this).addClass('starred');
 				},
 				function() {
-					if (!isFavorite(elm.id)) $(this).removeClass('starred');
+					if (processing) return;
+					if (!favorites[favorite.id]) $(this).removeClass('starred');
 				}
 			)
 			.click(function() {
@@ -72,38 +76,32 @@
 				if (processing) return;
 				processing = true;
 
-				chrome.extension.sendRequest(
-					{
-						action   : 'inBookmarks',
-						favorite : favorite
-					},
-					function(response) {
-						if (response.result) {
-							$this.removeClass('starred');
-							chrome.extension.sendRequest(
-								{
-									action   : 'removeBookmark',
-									favorite : favorite
-								},
-								function(response) {
-									processing = false;
-								}
-							);
+				if (favorites[favorite.id]) {
+					$this.removeClass('starred');
+					chrome.extension.sendRequest(
+						{
+							action   : 'removeBookmark',
+							favorite : favorite
+						},
+						function(response) {
+							delete favorites[favorite.id];
+							processing = false;
 						}
-						else {
-							$this.addClass('starred');
-							chrome.extension.sendRequest(
-								{
-									action   : 'addBookmark',
-									favorite : favorite
-								},
-								function(response) {
-									processing = false;
-								}
-							);
+					);
+				}
+				else {
+					$this.addClass('starred');
+					chrome.extension.sendRequest(
+						{
+							action   : 'addBookmark',
+							favorite : favorite
+						},
+						function(response) {
+							favorites[favorite.id] = true;
+							processing = false;
 						}
-					}
-				);
+					);
+				}
 			});
 
 		processing = true;
@@ -114,9 +112,10 @@
 			},
 			function(response) {
 				if (response.result) {
+					favorites[favorite.id] = true;
 					$starHolder.addClass('starred');
-					processing = false;
 				}
+				processing = false;
 			}
 		);
 
