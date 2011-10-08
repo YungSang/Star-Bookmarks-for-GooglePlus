@@ -1,6 +1,6 @@
 {
-  "name"            : "Google+ Star Bookmarks",
-  "version"         : "0.0.1",
+  "name"            : "Star Bookmarks for Google+",
+  "version"         : "0.0.3",
   "description"     : "Add the Star functionality to Google+ using Google Bookmarks",
   "icons": {
     "16"            : "img/star-16.png",
