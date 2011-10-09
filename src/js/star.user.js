@@ -155,6 +155,27 @@
 */}
 	setCSSFromFunction(starred_css);
 
-	$(update);
+	$(function() {
+		if (!localStorage['favorites_uploaded'] && (localStorage['favorites'] != null)) {
+			localStorage['favorites_uploaded'] = true;
+
+			var favorites = JSON.parse(localStorage['favorites']);
+
+			for (var i = 0, len = favorites.length ; i < len ; i++) {
+				var favorite = favorites[i];
+				favorite.post_url = PLUS_URL + favorite.post_url;
+				chrome.extension.sendRequest(
+					{
+						action   : 'addBookmark',
+						favorite : favorite
+					},
+					function(response) {
+					}
+				);
+			}
+		}
+
+		update();
+	});
 
 })(jQuery);
