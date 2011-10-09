@@ -11,7 +11,7 @@
 		loadBookmarks();
 	});
 
-	function loadBookmarks() {
+	function loadBookmarks(callback) {
 		$.ajax({
 			type     : 'GET',
 			url      : FIND_URL,
@@ -40,6 +40,8 @@
 				chrome.browserAction.setBadgeText({
 					text : $items.length ? $items.length + '' : ''
 				});
+
+				if (typeof callback == 'function') callback();
 			}
 		});
 	}
@@ -149,6 +151,7 @@
 	}
 
 	window.STAR_API = {
+		loadBookmarks  : loadBookmarks,
 		removeBookmark : removeBookmark
 	};
 

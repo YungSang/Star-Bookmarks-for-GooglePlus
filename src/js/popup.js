@@ -21,6 +21,21 @@
 			chrome.tabs.create({url: $(this).attr('href')});
 			window.close();
 		});
+
+		var $a = $('<a/>', {
+				href  : '#',
+				title : 'Reload'
+			}).click(function() {
+				bg.STAR_API.loadBookmarks(function() {
+					$('article').empty().append(bg.$('article').html());
+				});
+				return false;
+			});
+		$('<img/>', {
+			src : chrome.extension.getURL('img/reload-16.png'),
+			alt : ''
+		}).appendTo($a);
+		$a.append(' Reload').appendTo($('header nav'));
 	});
 
 
