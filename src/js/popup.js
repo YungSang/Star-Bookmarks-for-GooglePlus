@@ -17,7 +17,7 @@
 			event.stopPropagation();
 		});
 
-		$('footer a').click(function() {
+		$('header nav a').click(function() {
 			chrome.tabs.create({url: $(this).attr('href')});
 			window.close();
 		});
