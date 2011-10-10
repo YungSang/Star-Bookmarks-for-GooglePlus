@@ -175,8 +175,12 @@
 	);
 
 	function getUserIcon(url) {
-		url.match(/([0-9]+)\/posts\//);
-		return 'http://www.google.com/s2/photos/profile/' + RegExp.$1 + '?sz=48';
+		if (url.match(/([0-9]+)\/posts\//)) {
+			return 'http://www.google.com/s2/photos/profile/' + RegExp.$1 + '?sz=48';
+		}
+		else {
+			return 'http://www.gstatic.com/s2/oz/images/interest/sparks.png';
+		}
 	}
 
 })(jQuery);

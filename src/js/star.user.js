@@ -50,9 +50,9 @@
 
 		var favorite = {
 			id          : elm.id,
-			name        : $nameLink.html(),
+			name        : $nameLink.html() || 'Sparks',
 			post_date   : $postLink.attr('title'),
-			post_url    : PLUS_URL + $postLink.attr('href'),
+			post_url    : makeAbsoluteURL($postLink.attr('href')),
 			text        : $contentBox.get(0).innerText.substring(0, 130) + '...',
 			picture_url : $imgElm.attr('src')
 		};
@@ -163,7 +163,7 @@
 
 			for (var i = 0, len = favorites.length ; i < len ; i++) {
 				var favorite = favorites[i];
-				favorite.post_url = PLUS_URL + favorite.post_url;
+				favorite.post_url = makeAbsoluteURL(favorite.post_url);
 				chrome.extension.sendRequest(
 					{
 						action   : 'addBookmark',
@@ -177,5 +177,14 @@
 
 		update();
 	});
+
+	function makeAbsoluteURL(url) {
+		if (url.match(/^http/)) {
+			return url;
+		}
+		else {
+			return PLUS_URL + url;
+		}
+	}
 
 })(jQuery);
