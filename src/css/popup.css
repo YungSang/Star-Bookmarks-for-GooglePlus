@@ -16,6 +16,10 @@ header h1 {
 	font-size: 16px;
 }
 
+#stars {
+	padding-left: 0.25em;
+}
+
 header > a {
 	display: block;
 	float: right;

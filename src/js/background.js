@@ -7,6 +7,8 @@
 
 	var signature = null;
 
+	var no_badge = false;
+
 	$(function() {
 		loadBookmarks();
 	});
@@ -34,12 +36,14 @@
 
 				$article.append($ul);
 
-				chrome.browserAction.setBadgeBackgroundColor({
-					color : [255, 0, 0, 255]
-				});
-				chrome.browserAction.setBadgeText({
-					text : $items.length ? $items.length + '' : ''
-				});
+				if (!no_badge)  {
+					chrome.browserAction.setBadgeBackgroundColor({
+						color : [255, 0, 0, 255]
+					});
+					chrome.browserAction.setBadgeText({
+						text : $items.length ? $items.length + '' : ''
+					});
+				}
 
 				if (typeof callback == 'function') callback();
 			}
@@ -118,16 +122,18 @@
 			success  : function(data) {
 				getBookmark(favorite.post_url, function(item) {
 					addBookmarkToList(item, $('article ul'), true)
-					var $items = $('article ul li.bookmark');
-					chrome.browserAction.setBadgeText({
-						text : $items.length ? $items.length + '' : ''
-					});
+					if (!no_badge)  {
+						var $items = $('article ul li.bookmark');
+						chrome.browserAction.setBadgeText({
+							text : $items.length ? $items.length + '' : ''
+						});
+					}
 				});
 			}
 		});
 	}
 
-	function removeBookmark(bkmk_id) {
+	function removeBookmark(bkmk_id, callback) {
 		$.ajax({
 			type     : 'POST',
 			dataType : 'html',
@@ -138,10 +144,13 @@
 			},
 			success  : function(data) {
 				$('#bkmk_' + bkmk_id).remove();
-				var $items = $('article ul li.bookmark');
-				chrome.browserAction.setBadgeText({
-					text : $items.length ? $items.length + '' : ''
-				});
+				if (!no_badge)  {
+					var $items = $('article ul li.bookmark');
+					chrome.browserAction.setBadgeText({
+						text : $items.length ? $items.length + '' : ''
+					});
+				}
+				if (typeof callback == 'function') callback();
 			}
 		});
 	}
