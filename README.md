@@ -1,7 +1,5 @@
 # Star Bookmarks for Google+
 
-![star](https://lh4.googleusercontent.com/o7Bkh8T21ko7tQ6lia8sLq-QMcL2ZUyyfqKc4pa8Mq57haE6XkMn0dGtC_YvqFuRNcDwd3EPdw=s128-h128-e365)
-
 Add the Star functionality to [Google+](https://plus.google.com/) using [Google Bookmarks](https://www.google.com/bookmarks/)
 
 - check a star to store a post as a bookmark on your Google Bookmarks
@@ -10,10 +8,6 @@ Add the Star functionality to [Google+](https://plus.google.com/) using [Google 
 - go to a post page on clicking the post on the list
 - reload bookmarks from your Google Bookmarks, in case that you starred a post at the other browser instances or modified bookmarks at your Google Bookmarks directly.
 - import bookmarks from the old user script version, [Google+ Star](http://userscripts.org/scripts/show/111452) at the first time 
-
-## Install at Chrome Web Store
-
-<https://chrome.google.com/webstore/detail/ekeefoffeofmkgmfnhkdmbpiabepmlme>
 
 ## Screen Shots
 
